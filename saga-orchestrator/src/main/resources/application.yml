@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: saga-orchestrator
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: saga-orchestrator-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.example.common.dto,com.example.common.model"
+        spring.json.value.default.type: "com.example.common.dto.Command"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+server:
+  port: 8084
+
+logging:
+  level:
+    com.example.sagaorchestrator: DEBUG
+    org.springframework.kafka: DEBUG
+    org.apache.kafka.clients.consumer: WARN
